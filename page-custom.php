@@ -30,12 +30,13 @@ Template Name: Custom Page Example
 							    <?php the_content(); ?>
 						    </section> <!-- end article section -->
 						
+						
 						    <footer class="article-footer">
 							    <p class="clearfix"><?php the_tags('<span class="tags">' . __('Tags:', 'bonestheme') . '</span> ', ', ', ''); ?></p>
 							
 						    </footer> <!-- end article footer -->
 						    
-						    <?php comments_template(); ?>
+						    <!-- <?php //comments_template(); ?> -->
 					
 					    </article> <!-- end article -->
 					
@@ -59,7 +60,7 @@ Template Name: Custom Page Example
 			
 				    </div> <!-- end #main -->
     
-				    <?php get_sidebar(); ?>
+				    <?php //get_sidebar(); ?>
 				    
 				</div> <!-- end #inner-content -->
     

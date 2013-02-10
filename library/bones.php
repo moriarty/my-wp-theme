@@ -49,6 +49,10 @@ function bones_ahoy() {
     // cleaning up excerpt
     add_filter('excerpt_more', 'bones_excerpt_more');
 
+    // remove trailing slashes
+	add_filter('page_link', 'permalink_untrailingslashit');
+	add_filter('post_type_link', 'permalink_untrailingslashit');
+
 } /* end bones ahoy */
 
 /*********************
@@ -115,7 +119,6 @@ function bones_gallery_style($css) {
   return preg_replace("!<style type='text/css'>(.*?)</style>!s", '', $css);
 }
 
-
 /*********************
 SCRIPTS & ENQUEUEING
 *********************/
@@ -139,6 +142,8 @@ function bones_scripts_and_styles() {
     }
 
     //adding scripts file in the footer
+
+    wp_register_script( 'final-js', get_stylesheet_directory_uri() . '/library/js/final.js', array( 'jquery' ), '', true );
     wp_register_script( 'bones-js', get_stylesheet_directory_uri() . '/library/js/scripts.js', array( 'jquery' ), '', true );
 
     // enqueue styles and scripts
@@ -150,6 +155,8 @@ function bones_scripts_and_styles() {
     using the google cdn. That way it stays cached
     and your site will load faster.
     */
+    wp_enqueue_script( 'final-js');
+
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'bones-js' );
 
@@ -265,7 +272,7 @@ function bones_footer_links() {
 function bones_main_nav_fallback() {
 	wp_page_menu( array(
 		'show_home' => true,
-    	'menu_class' => 'nav footer-nav clearfix',      // adding custom nav class
+    	'menu_class' => 'nav top-nav clearfix',      // adding custom nav class
 		'include'     => '',
 		'exclude'     => '',
 		'echo'        => true,
@@ -371,6 +378,10 @@ function bones_page_navi($before = '', $after = '') {
 /*********************
 RANDOM CLEANUP ITEMS
 *********************/
+// remove trailing slash from permalinks
+function permalink_untrailingslashit($link) {
+	return untrailingslashit($link);
+}
 
 // remove the p from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
 function bones_filter_ptags_on_images($content){
